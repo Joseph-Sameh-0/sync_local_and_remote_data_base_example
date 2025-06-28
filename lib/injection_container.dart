@@ -8,6 +8,7 @@ import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sync_local_and_remote_data_base_example/data/datasources/remote/dtos/todo_model.dart';
+import 'package:sync_local_and_remote_data_base_example/domain/usecases/sync_use_case.dart';
 
 
 import 'data/datasources/abstract/firebase_service.dart';
@@ -25,6 +26,7 @@ import 'data/repositories/todo_repository_impl.dart';
 import 'domain/repositories/todo_repository.dart';
 import 'domain/usecases/add_todo.dart';
 import 'domain/usecases/watch_todos.dart';
+import 'presentation/cubit/connectivity_cubit.dart';
 import 'presentation/cubit/todo_cubit.dart';
 
 final sl = GetIt.instance;
@@ -50,12 +52,15 @@ Future<void> init() async {
   //! Features - Todo
   // Cubit
   sl.registerFactory(() => TodoCubit(watchTodosUseCase: sl(), addTodoUseCase: sl(), toggleCompleteTodoUseCase: sl(), getAllTodosUseCase: sl()));
+  sl.registerFactory(() => ConnectivityCubit(internetConnectionChecker: sl(), syncUseCase: sl()));
 
   // Use cases
   sl.registerLazySingleton(() => WatchTodosUseCase(repository: sl()));
   sl.registerLazySingleton(() => AddTodoUseCase(repository: sl()));
   sl.registerLazySingleton(() => ToggleCompleteTodoUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetAllTodosUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SyncUseCase(todoRepository: sl()));
+
 
   // Repository
   sl.registerLazySingleton<TodoRepository>(

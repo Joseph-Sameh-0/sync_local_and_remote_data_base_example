@@ -95,4 +95,11 @@ class TodoRepositoryImpl implements TodoRepository {
   void dispose() {
     _networkSub?.cancel();
   }
+
+  @override
+  Future<void> syncTodos() {
+    // // TODO: implement syncTodos
+    print("object");
+    return Future.value();
+  }
 }
