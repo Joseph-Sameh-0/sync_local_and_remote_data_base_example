@@ -1,5 +1,4 @@
-import 'package:sync_local_and_remote_data_base_example/domain/repositories/todo_repository.dart';
-
+import '../repositories/todo_repository.dart';
 import 'base_use_case.dart';
 
 class SyncUseCase extends UseCase<void, NoParams> {

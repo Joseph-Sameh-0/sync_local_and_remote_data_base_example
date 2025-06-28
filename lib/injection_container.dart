@@ -7,8 +7,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sync_local_and_remote_data_base_example/data/datasources/remote/dtos/todo_model.dart';
-import 'package:sync_local_and_remote_data_base_example/domain/usecases/sync_use_case.dart';
 
 
 import 'data/datasources/abstract/firebase_service.dart';
@@ -16,7 +14,9 @@ import 'data/datasources/abstract/network_info.dart';
 import 'data/datasources/abstract/todo_data_source.dart';
 import 'data/datasources/local/entities/todo_entity.dart';
 import 'data/datasources/local/todo_local_data_source.dart';
+import 'data/datasources/remote/dtos/todo_model.dart';
 import 'domain/usecases/get_all_todos_use_case.dart';
+import 'domain/usecases/sync_use_case.dart';
 import 'domain/usecases/toggle_complete_todo_use_case.dart';
 import 'firebase_options.dart';
 import 'data/datasources/remote/firebase_service_impl.dart';

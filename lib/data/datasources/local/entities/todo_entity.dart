@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:sync_local_and_remote_data_base_example/data/datasources/remote/dtos/todo_model.dart';
 import '../../../../domain/entities/todo.dart';
+import '../../remote/dtos/todo_model.dart';
 
 part 'todo_entity.g.dart';
 

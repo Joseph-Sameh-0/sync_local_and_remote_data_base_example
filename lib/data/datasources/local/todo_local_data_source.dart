@@ -1,8 +1,8 @@
 import 'package:isar/isar.dart';
-import 'package:sync_local_and_remote_data_base_example/data/datasources/local/entities/todo_entity.dart';
 
 import '../../../domain/Exception/exceptions.dart';
 import '../abstract/todo_data_source.dart';
+import 'entities/todo_entity.dart';
 
 class TodoIsarDataSource implements TodoDataSource<TodoEntity> {
   final Isar db;

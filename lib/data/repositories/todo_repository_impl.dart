@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:sync_local_and_remote_data_base_example/data/datasources/local/entities/todo_entity.dart';
-
 import '../../domain/Exception/exceptions.dart';
 import '../../domain/entities/todo.dart';
 import '../../domain/repositories/todo_repository.dart';
 import '../datasources/abstract/network_info.dart';
 import '../datasources/abstract/todo_data_source.dart';
+import '../datasources/local/entities/todo_entity.dart';
 import '../datasources/remote/dtos/todo_model.dart';
 
 class TodoRepositoryImpl implements TodoRepository {
