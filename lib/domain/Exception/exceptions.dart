@@ -98,3 +98,15 @@ class FirebaseOperationException extends MyException {
 class ToggleTodoException extends MyException {
   ToggleTodoException() : super("Failed to toggle todo completion. Please try again.");
 }
+
+class ToDoNotFoundException extends MyException {
+  ToDoNotFoundException() : super("Todo not found.");
+}
+
+class TodoDoesNotFoundException extends MyException {
+  TodoDoesNotFoundException() : super("Todo does not exist");
+}
+
+class TodoNotUpdatedException extends MyException {
+  TodoNotUpdatedException() : super("Failed to update todo. Please try again.");
+}

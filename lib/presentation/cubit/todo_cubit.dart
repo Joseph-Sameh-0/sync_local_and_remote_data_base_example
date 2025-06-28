@@ -1,16 +1,18 @@
-
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/Exception/exceptions.dart';
 import '../../domain/entities/todo.dart';
+import '../../domain/repositories/todo_repository.dart';
 import '../../domain/usecases/add_todo.dart';
 import '../../domain/usecases/base_use_case.dart';
 import '../../domain/usecases/get_all_todos_use_case.dart';
 import '../../domain/usecases/toggle_complete_todo_use_case.dart';
 import '../../domain/usecases/watch_todos.dart';
+import '../../injection_container.dart';
 import 'todo_state.dart';
 
 class TodoCubit extends Cubit<TodoState> {
@@ -30,11 +32,14 @@ class TodoCubit extends Cubit<TodoState> {
   void loadTodos() {
     emit(TodoLoading());
     _todosSubscription?.cancel();
-    _todosSubscription = watchTodosUseCase(NoParams()).listen((todos) {
-      emit(TodoLoaded(todos: todos));
-    }, onError: (error) {
-      emit(TodoError(exception: LoadTodosException()));
-    });
+    _todosSubscription = watchTodosUseCase(NoParams()).listen(
+      (todos) {
+        emit(TodoLoaded(todos: todos));
+      },
+      onError: (error) {
+        emit(TodoError(exception: LoadTodosException()));
+      },
+    );
   }
 
   Future<void> fetchAllTodos() async {
@@ -64,6 +69,9 @@ class TodoCubit extends Cubit<TodoState> {
   Future<void> toggleTodoCompletion(String id, bool completed) async {
     try {
       await toggleCompleteTodoUseCase(id, completed);
+    } on MyException catch (e) {
+      log('Error toggling todo completion: $e');
+      emit(TodoError(exception: e));
     } catch (e) {
       emit(TodoError(exception: ToggleTodoException()));
     }
@@ -72,6 +80,7 @@ class TodoCubit extends Cubit<TodoState> {
   @override
   Future<void> close() {
     _todosSubscription?.cancel();
+    sl<TodoRepository>().dispose();
     return super.close();
   }
 }

@@ -1,11 +1,14 @@
-import '../../models/todo_model.dart';
+import '../remote/dtos/todo_model.dart';
+import 'firebase_service.dart';
+import '../utils/write_operation.dart';
 
-abstract class TodoDataSource {
-  Stream<List<TodoModel>> watchTodos();
-  Future<void> addTodo(TodoModel todo);
-  Future<void> updateTodo(TodoModel todo);
+abstract class TodoDataSource<T> {
+  Stream<List<T>> watchTodos();
+  Future<void> addTodo(T todo);
+  Future<void> updateTodo(T todo);
   Future<void> deleteTodo(String id);
-  Future<TodoModel> getTodoById(String todoId);
-  Future<List<TodoModel>> getAllTodos();
-  Future<void> batchUpdateTodos(List<TodoModel> todos);
-}
+  Future<T?> getTodoById(String todoId);
+  Future<List<T>> getAllTodos();
+  Future<void> batchUpdateTodos(List<T> todos);
+  Future<void> overrideTodos(List<T> todos);
+  }

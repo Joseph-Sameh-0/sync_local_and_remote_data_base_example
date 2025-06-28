@@ -1,15 +1,20 @@
-import '../../domain/entities/todo.dart';
+import '../../../../domain/entities/todo.dart';
 
-class TodoModel extends Todo {
-  TodoModel({
-    required super.id,
-    required super.title,
-    required super.completed,
-    required super.createdAt,
+class TodoDto {
+  final String id;
+  final String title;
+  final bool completed;
+  final DateTime createdAt;
+
+  TodoDto({
+    required this.id,
+    required this.title,
+    required this.completed,
+    required this.createdAt,
   });
 
-  factory TodoModel.fromJson(Map<String, dynamic> json, String id) {
-    return TodoModel(
+  factory TodoDto.fromJson(Map<String, dynamic> json, String id) {
+    return TodoDto(
       id: id,
       title: json['title'],
       completed: json['completed'],
@@ -25,8 +30,8 @@ class TodoModel extends Todo {
     };
   }
 
-  factory TodoModel.fromEntity(Todo todo) {
-    return TodoModel(
+  factory TodoDto.fromDomain(Todo todo) {
+    return TodoDto(
       id: todo.id,
       title: todo.title,
       completed: todo.completed,
@@ -34,7 +39,7 @@ class TodoModel extends Todo {
     );
   }
 
-  Todo toEntity() {
+  Todo toDomain() {
     return Todo(
       id: id,
       title: title,

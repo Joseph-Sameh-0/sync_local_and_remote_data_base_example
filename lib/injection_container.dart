@@ -4,11 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sync_local_and_remote_data_base_example/data/datasources/remote/dtos/todo_model.dart';
+
 
 import 'data/datasources/abstract/firebase_service.dart';
 import 'data/datasources/abstract/network_info.dart';
 import 'data/datasources/abstract/todo_data_source.dart';
+import 'data/datasources/local/entities/todo_entity.dart';
+import 'data/datasources/local/todo_local_data_source.dart';
 import 'domain/usecases/get_all_todos_use_case.dart';
 import 'domain/usecases/toggle_complete_todo_use_case.dart';
 import 'firebase_options.dart';
@@ -53,14 +59,29 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<TodoRepository>(
-    () => TodoRepositoryImpl(remoteDataSource: sl()),
+    () => TodoRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), networkInfoDataSource: sl()),
   );
 
 
   // Data sources
-  sl.registerLazySingleton<TodoDataSource>(
+  sl.registerLazySingleton<TodoDataSource<TodoDto>>(
     () => TodoFireStoreDataSource(firebaseService: sl()),
   );
+
+  final appDir = await getApplicationDocumentsDirectory();
+
+  final isar = await Isar.open(
+    [TodoEntitySchema],
+    directory: appDir.path,
+  );
+
+  sl.registerLazySingleton<Isar>(() => isar);
+
+  sl.registerLazySingleton<TodoDataSource<TodoEntity>>(
+        () => TodoIsarDataSource(db: sl()),
+  );
+
+
 }
 
 Future<void> _initializeFirebase() async {

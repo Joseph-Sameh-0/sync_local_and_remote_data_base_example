@@ -46,7 +46,7 @@ class TodoPage extends StatelessWidget {
                   return Center(
                     child: Column(
                       children: [
-                        Text(state.exception.message),
+                        Text(state.exception.toString()),
                         ElevatedButton(
                           onPressed: () {
                             context.read<TodoCubit>().loadTodos();

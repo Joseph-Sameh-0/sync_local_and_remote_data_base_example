@@ -9,4 +9,10 @@ class NetworkInfoRemoteDataSource implements NetworkInfoDataSource {
 
   @override
   Future<bool> get isConnected => connectionChecker.hasConnection;
+
+  @override
+  Stream<bool> get onStateChange => connectionChecker.onStatusChange.map(
+    (status) => status == InternetConnectionStatus.connected,
+  );
+
 }

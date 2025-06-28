@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import '../../domain/Exception/exceptions.dart';
 import '../../domain/entities/todo.dart';
 
 abstract class TodoState extends Equatable {
@@ -24,7 +23,7 @@ class TodoLoaded extends TodoState {
 }
 
 class TodoError extends TodoState {
-  final MyException exception;
+  final Exception exception;
 
   const TodoError({required this.exception});
 

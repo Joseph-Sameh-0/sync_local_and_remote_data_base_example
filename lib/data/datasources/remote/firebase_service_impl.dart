@@ -10,7 +10,7 @@ class FirebaseServiceImpl implements FirebaseService {
   FirebaseServiceImpl({required this.firestore});
 
   @override
-  Future<T> getDoc<T>({
+  Future<T?> getDoc<T>({
     required String path,
     required T Function(Map<String, dynamic> json, String id) fromJson,
   }) async {
@@ -21,7 +21,7 @@ class FirebaseServiceImpl implements FirebaseService {
       }
       final data = snapshot.data();
       if (data == null) {
-        throw DataFormatException(path);
+        return null;
       }
       return fromJson(data, snapshot.id);
     } on FirebaseException catch (e) {
@@ -83,7 +83,7 @@ class FirebaseServiceImpl implements FirebaseService {
   }
 
   @override
-  Stream<T> streamDoc<T>({
+  Stream<T?> streamDoc<T>({
     required String path,
     required T Function(Map<String, dynamic> json) fromJson,
   }) {
@@ -96,7 +96,7 @@ class FirebaseServiceImpl implements FirebaseService {
           }
           final data = snapshot.data();
           if (data == null) {
-            throw DataFormatException(path);
+            return null;
           }
           return fromJson(data);
         })

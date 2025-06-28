@@ -5,8 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../utils/write_operation.dart';
 
 abstract class FirebaseService {
-
-  Future<T> getDoc<T>({
+  Future<T?> getDoc<T>({
     required String path,
     required T Function(Map<String, dynamic> json, String id) fromJson,
   });
@@ -20,7 +19,7 @@ abstract class FirebaseService {
 
   Future<void> batchWrite(List<WriteOperation> operations);
 
-  Stream<T> streamDoc<T>({
+  Stream<T?> streamDoc<T>({
     required String path,
     required T Function(Map<String, dynamic> json) fromJson,
   });
@@ -43,6 +42,4 @@ abstract class FirebaseService {
     Query Function(Query query)? queryBuilder,
     int? limit,
   });
-
-
 }

@@ -24,4 +24,9 @@ class Todo {
       createdAt: createdAt ?? this.createdAt,
     );
   }
+
+  @override
+  String toString() {
+    return 'Todo{id: $id, title: $title, completed: $completed, createdAt: $createdAt}';
+  }
 }
