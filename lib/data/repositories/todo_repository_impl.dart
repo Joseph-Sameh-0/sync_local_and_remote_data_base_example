@@ -3,7 +3,7 @@ import 'dart:async';
 import '../../domain/Exception/exceptions.dart';
 import '../../domain/entities/todo.dart';
 import '../../domain/repositories/todo_repository.dart';
-import '../datasources/abstract/network_info.dart';
+import '../../core/services/network_info_service/network_info_service.dart';
 import '../datasources/abstract/todo_data_source.dart';
 import '../datasources/local/entities/todo_entity.dart';
 import '../datasources/remote/dtos/todo_model.dart';
@@ -11,18 +11,18 @@ import '../datasources/remote/dtos/todo_model.dart';
 class TodoRepositoryImpl implements TodoRepository {
   final TodoDataSource<TodoDto> remoteDataSource;
   final TodoDataSource<TodoEntity> localDataSource;
-  final NetworkInfoDataSource networkInfoDataSource;
+  final NetworkInfoService networkInfoService;
   StreamSubscription? _networkSub;
 
   TodoRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
-    required this.networkInfoDataSource,
+    required this.networkInfoService,
   });
 
   @override
   Stream<List<Todo>> watchTodos() {
-    _networkSub ??= networkInfoDataSource.onStateChange.listen((isConnected) {
+    _networkSub ??= networkInfoService.onStatusChange.listen((isConnected) {
       if (isConnected) {
         remoteDataSource.watchTodos().listen((remoteTodos) async {
           localDataSource.overrideTodos(
@@ -40,7 +40,7 @@ class TodoRepositoryImpl implements TodoRepository {
 
   @override
   Future<List<Todo>> getAllTodos() async {
-    if (await networkInfoDataSource.isConnected) {
+    if (await networkInfoService.isConnected) {
       final remoteTodos = await remoteDataSource.getAllTodos();
       await localDataSource.overrideTodos(
         remoteTodos.map((todo) => TodoEntity.fromDto(todo)).toList(),
@@ -48,37 +48,6 @@ class TodoRepositoryImpl implements TodoRepository {
     }
     final todoEntities = await localDataSource.getAllTodos();
     return todoEntities.map((model) => model.toDomain()).toList();
-  }
-
-  @override
-  Future<void> addTodo(Todo todo) async {
-    if (await networkInfoDataSource.isConnected) {
-      await remoteDataSource.addTodo(TodoDto.fromDomain(todo));
-    } else {
-      await localDataSource.addTodo(TodoEntity.fromDomain(todo));
-    }
-  }
-
-  @override
-  Future<void> deleteTodo(String id) async {
-    if (await networkInfoDataSource.isConnected) {
-      return remoteDataSource.deleteTodo(id);
-    } else {
-      return localDataSource.deleteTodo(id);
-    }
-  }
-
-  @override
-  Future<void> updateTodo(Todo todo) async {
-    try {
-      if (await networkInfoDataSource.isConnected) {
-        return remoteDataSource.updateTodo(TodoDto.fromDomain(todo));
-      } else {
-        return localDataSource.updateTodo(TodoEntity.fromDomain(todo));
-      }
-    } catch (e) {
-      throw TodoNotUpdatedException();
-    }
   }
 
   @override
@@ -91,9 +60,37 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  void dispose() {
-    _networkSub?.cancel();
+  Future<void> addTodo(Todo todo) async {
+    if (await networkInfoService.isConnected) {
+      await remoteDataSource.addTodo(TodoDto.fromDomain(todo));
+    } else {
+      // TODO save changes to
+      await localDataSource.addTodo(TodoEntity.fromDomain(todo));
+    }
   }
+
+  @override
+  Future<void> deleteTodo(String id) async {
+    if (await networkInfoService.isConnected) {
+      return remoteDataSource.deleteTodo(id);
+    } else {
+      return localDataSource.deleteTodo(id);
+    }
+  }
+
+  @override
+  Future<void> updateTodo(Todo todo) async {
+    try {
+      if (await networkInfoService.isConnected) {
+        return remoteDataSource.updateTodo(TodoDto.fromDomain(todo));
+      } else {
+        return localDataSource.updateTodo(TodoEntity.fromDomain(todo));
+      }
+    } catch (e) {
+      throw TodoNotUpdatedException();
+    }
+  }
+
 
   @override
   Future<void> syncTodos() {
@@ -101,4 +98,10 @@ class TodoRepositoryImpl implements TodoRepository {
     print("object");
     return Future.value();
   }
+
+  @override
+  void dispose() {
+    _networkSub?.cancel();
+  }
+
 }

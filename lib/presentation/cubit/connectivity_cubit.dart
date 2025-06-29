@@ -1,23 +1,31 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+import '../../core/services/network_info_service/network_info_service.dart';
 import '../../domain/usecases/base_use_case.dart';
 import '../../domain/usecases/sync_use_case.dart';
+import 'connectivity_state.dart';
 
-class ConnectivityCubit extends Cubit<bool> {
-  final InternetConnectionChecker internetConnectionChecker;
+class ConnectivityCubit extends Cubit<ConnectivityState> {
+  final NetworkInfoService networkInfoService;
   final SyncUseCase syncUseCase;
   late final StreamSubscription _subscription;
 
-  ConnectivityCubit({required this.internetConnectionChecker, required this.syncUseCase}) : super(true) {
-    _subscription = internetConnectionChecker.onStatusChange.listen((status) async {
-      final isConnected = status == InternetConnectionStatus.connected;
-      emit(isConnected);
+  ConnectivityCubit({
+    required this.networkInfoService,
+    required this.syncUseCase,
+  }) : super(ConnectivityInitial()) {
+    ConnectivityLoading();
+    _subscription = networkInfoService.onStatusChange.listen((
+      isConnected,
+    ) async {
+      emit(isConnected ? ConnectivityConnected() : ConnectivityDisconnected());
 
       if (isConnected) {
+        emit(ConnectivitySyncing());
         await syncUseCase(NoParams());
+        emit(ConnectivityConnected());
       }
     });
   }

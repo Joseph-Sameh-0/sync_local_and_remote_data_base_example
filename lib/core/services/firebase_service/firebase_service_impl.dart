@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../domain/Exception/exceptions.dart';
-import '../abstract/firebase_service.dart';
-import '../utils/write_operation.dart';
+import 'firebase_service.dart';
+import '../../../data/datasources/utils/write_operation.dart';
 
 class FirebaseServiceImpl implements FirebaseService {
   final FirebaseFirestore firestore;

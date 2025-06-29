@@ -1,5 +1,5 @@
 import '../../datasources/remote/dtos/todo_model.dart';
-import '../abstract/firebase_service.dart';
+import '../../../core/services/firebase_service/firebase_service.dart';
 import '../abstract/todo_data_source.dart';
 import '../utils/write_operation.dart';
 

@@ -39,15 +39,6 @@ class TodoDto {
     );
   }
 
-  Todo toDomain() {
-    return Todo(
-      id: id,
-      title: title,
-      completed: completed,
-      createdAt: createdAt,
-    );
-  }
-
   @override
   String toString() {
     return 'TodoModel(id: $id, title: $title, completed: $completed, createdAt: $createdAt)';

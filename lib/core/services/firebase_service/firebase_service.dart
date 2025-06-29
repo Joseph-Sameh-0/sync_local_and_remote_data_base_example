@@ -1,8 +1,6 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../utils/write_operation.dart';
+import '../../../data/datasources/utils/write_operation.dart';
 
 abstract class FirebaseService {
   Future<T?> getDoc<T>({

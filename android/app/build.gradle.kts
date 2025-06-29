@@ -11,7 +11,9 @@ plugins {
 android {
     namespace = "com.joseph_sameh_0.sync_local_and_remote_data_base_example"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+
+//    ndkVersion = flutter.ndkVersion
+      ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
