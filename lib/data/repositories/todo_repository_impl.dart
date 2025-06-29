@@ -4,6 +4,7 @@ import '../../domain/Exception/exceptions.dart';
 import '../../domain/entities/todo.dart';
 import '../../domain/repositories/todo_repository.dart';
 import '../../core/services/network_info_service/network_info_service.dart';
+import '../datasources/abstract/operation_data_source.dart';
 import '../datasources/abstract/todo_data_source.dart';
 import '../datasources/local/entities/todo_entity.dart';
 import '../datasources/remote/dtos/todo_model.dart';
@@ -12,12 +13,14 @@ class TodoRepositoryImpl implements TodoRepository {
   final TodoDataSource<TodoDto> remoteDataSource;
   final TodoDataSource<TodoEntity> localDataSource;
   final NetworkInfoService networkInfoService;
+  final OperationDataSource operationDataSource;
   StreamSubscription? _networkSub;
 
   TodoRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfoService,
+    required this.operationDataSource,
   });
 
   @override

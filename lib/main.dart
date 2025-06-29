@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'injection_container.dart';
+import 'di/injection_container.dart';
 import 'main_page.dart';
 import 'presentation/cubit/connectivity_cubit.dart';
 

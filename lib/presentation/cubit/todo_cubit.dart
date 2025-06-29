@@ -12,7 +12,7 @@ import '../../domain/usecases/base_use_case.dart';
 import '../../domain/usecases/get_all_todos_use_case.dart';
 import '../../domain/usecases/toggle_complete_todo_use_case.dart';
 import '../../domain/usecases/watch_todos.dart';
-import '../../injection_container.dart';
+import '../../di/injection_container.dart';
 import 'todo_state.dart';
 
 class TodoCubit extends Cubit<TodoState> {
