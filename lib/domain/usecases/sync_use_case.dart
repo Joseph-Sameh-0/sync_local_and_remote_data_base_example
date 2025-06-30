@@ -1,13 +1,13 @@
-import '../repositories/todo_repository.dart';
+import '../repositories/transaction_repository.dart';
 import 'base_use_case.dart';
 
 class SyncUseCase extends UseCase<void, NoParams> {
-  final TodoRepository todoRepository;
+  final TransactionRepository transactionRepository;
 
-  SyncUseCase({required this.todoRepository});
+  SyncUseCase({required this.transactionRepository});
 
   @override
   Future<void> call(NoParams params) async {
-    await todoRepository.syncTodos();
+    await transactionRepository.syncTransactions();
   }
 }

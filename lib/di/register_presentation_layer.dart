@@ -1,14 +1,13 @@
 import '../presentation/cubit/connectivity_cubit.dart';
-import '../presentation/cubit/todo_cubit.dart';
+import '../presentation/cubit/transaction_cubit.dart';
 import 'injection_container.dart';
 
 void registerPresentationLayer() {
   sl.registerFactory(
-        () => TodoCubit(
-      watchTodosUseCase: sl(),
-      addTodoUseCase: sl(),
-      toggleCompleteTodoUseCase: sl(),
-      getAllTodosUseCase: sl(),
+        () => TransactionCubit(
+      watchTransactionsUseCase: sl(),
+      addTransactionUseCase: sl(),
+      getAllTransactionsUseCase: sl(),
     ),
   );
   sl.registerFactory(

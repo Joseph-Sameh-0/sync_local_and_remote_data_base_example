@@ -17,7 +17,7 @@ class SyncApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Firebase Todo',
+      title: 'Firebase Transaction',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: BlocProvider(
         create: (_) => sl<ConnectivityCubit>(),

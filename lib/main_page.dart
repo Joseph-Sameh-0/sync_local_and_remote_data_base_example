@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'di/injection_container.dart';
 import 'presentation/cubit/connectivity_cubit.dart';
 import 'presentation/cubit/connectivity_state.dart';
-import 'presentation/cubit/todo_cubit.dart';
-import 'presentation/features/todo/todo_page.dart';
+import 'presentation/cubit/transaction_cubit.dart';
+import 'presentation/features/transaction/transaction_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -47,8 +47,8 @@ class MainPage extends StatelessWidget {
             ?widget,
             Expanded(
               child: BlocProvider(
-                create: (_) => sl<TodoCubit>()..loadTodos(),
-                child: TodoPage(),
+                create: (_) => sl<TransactionCubit>()..loadTransactions(),
+                child: TransactionPage(),
               ),
             ),
           ],

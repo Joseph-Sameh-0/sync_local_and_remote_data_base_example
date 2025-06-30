@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo_entity.dart';
+part of 'transaction_entity.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,18 +9,18 @@ part of 'todo_entity.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetTodoEntityCollection on Isar {
-  IsarCollection<TodoEntity> get todoEntitys => this.collection();
+extension GetTransactionEntityCollection on Isar {
+  IsarCollection<TransactionEntity> get transactionEntitys => this.collection();
 }
 
-const TodoEntitySchema = CollectionSchema(
-  name: r'TodoEntity',
-  id: -5831862288383718631,
+const TransactionEntitySchema = CollectionSchema(
+  name: r'TransactionEntity',
+  id: 7517214299117749517,
   properties: {
-    r'completed': PropertySchema(
+    r'amount': PropertySchema(
       id: 0,
-      name: r'completed',
-      type: IsarType.bool,
+      name: r'amount',
+      type: IsarType.long,
     ),
     r'createdAt': PropertySchema(
       id: 1,
@@ -32,16 +32,21 @@ const TodoEntitySchema = CollectionSchema(
       name: r'id',
       type: IsarType.string,
     ),
-    r'title': PropertySchema(
+    r'lastUpdate': PropertySchema(
       id: 3,
+      name: r'lastUpdate',
+      type: IsarType.dateTime,
+    ),
+    r'title': PropertySchema(
+      id: 4,
       name: r'title',
       type: IsarType.string,
     )
   },
-  estimateSize: _todoEntityEstimateSize,
-  serialize: _todoEntitySerialize,
-  deserialize: _todoEntityDeserialize,
-  deserializeProp: _todoEntityDeserializeProp,
+  estimateSize: _transactionEntityEstimateSize,
+  serialize: _transactionEntitySerialize,
+  deserialize: _transactionEntityDeserialize,
+  deserializeProp: _transactionEntityDeserializeProp,
   idName: r'isarId',
   indexes: {
     r'id': IndexSchema(
@@ -60,14 +65,14 @@ const TodoEntitySchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _todoEntityGetId,
-  getLinks: _todoEntityGetLinks,
-  attach: _todoEntityAttach,
+  getId: _transactionEntityGetId,
+  getLinks: _transactionEntityGetLinks,
+  attach: _transactionEntityAttach,
   version: '3.1.0+1',
 );
 
-int _todoEntityEstimateSize(
-  TodoEntity object,
+int _transactionEntityEstimateSize(
+  TransactionEntity object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -77,35 +82,37 @@ int _todoEntityEstimateSize(
   return bytesCount;
 }
 
-void _todoEntitySerialize(
-  TodoEntity object,
+void _transactionEntitySerialize(
+  TransactionEntity object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.completed);
+  writer.writeLong(offsets[0], object.amount);
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeString(offsets[2], object.id);
-  writer.writeString(offsets[3], object.title);
+  writer.writeDateTime(offsets[3], object.lastUpdate);
+  writer.writeString(offsets[4], object.title);
 }
 
-TodoEntity _todoEntityDeserialize(
+TransactionEntity _transactionEntityDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = TodoEntity(
-    completed: reader.readBoolOrNull(offsets[0]) ?? false,
+  final object = TransactionEntity(
+    amount: reader.readLong(offsets[0]),
     createdAt: reader.readDateTime(offsets[1]),
     id: reader.readString(offsets[2]),
-    title: reader.readString(offsets[3]),
+    lastUpdate: reader.readDateTime(offsets[3]),
+    title: reader.readString(offsets[4]),
   );
   object.isarId = id;
   return object;
 }
 
-P _todoEntityDeserializeProp<P>(
+P _transactionEntityDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -113,36 +120,40 @@ P _todoEntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readLong(offset)) as P;
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
+      return (reader.readDateTime(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Id _todoEntityGetId(TodoEntity object) {
+Id _transactionEntityGetId(TransactionEntity object) {
   return object.isarId;
 }
 
-List<IsarLinkBase<dynamic>> _todoEntityGetLinks(TodoEntity object) {
+List<IsarLinkBase<dynamic>> _transactionEntityGetLinks(
+    TransactionEntity object) {
   return [];
 }
 
-void _todoEntityAttach(IsarCollection<dynamic> col, Id id, TodoEntity object) {
+void _transactionEntityAttach(
+    IsarCollection<dynamic> col, Id id, TransactionEntity object) {
   object.isarId = id;
 }
 
-extension TodoEntityByIndex on IsarCollection<TodoEntity> {
-  Future<TodoEntity?> getById(String id) {
+extension TransactionEntityByIndex on IsarCollection<TransactionEntity> {
+  Future<TransactionEntity?> getById(String id) {
     return getByIndex(r'id', [id]);
   }
 
-  TodoEntity? getByIdSync(String id) {
+  TransactionEntity? getByIdSync(String id) {
     return getByIndexSync(r'id', [id]);
   }
 
@@ -154,12 +165,12 @@ extension TodoEntityByIndex on IsarCollection<TodoEntity> {
     return deleteByIndexSync(r'id', [id]);
   }
 
-  Future<List<TodoEntity?>> getAllById(List<String> idValues) {
+  Future<List<TransactionEntity?>> getAllById(List<String> idValues) {
     final values = idValues.map((e) => [e]).toList();
     return getAllByIndex(r'id', values);
   }
 
-  List<TodoEntity?> getAllByIdSync(List<String> idValues) {
+  List<TransactionEntity?> getAllByIdSync(List<String> idValues) {
     final values = idValues.map((e) => [e]).toList();
     return getAllByIndexSync(r'id', values);
   }
@@ -174,36 +185,37 @@ extension TodoEntityByIndex on IsarCollection<TodoEntity> {
     return deleteAllByIndexSync(r'id', values);
   }
 
-  Future<Id> putById(TodoEntity object) {
+  Future<Id> putById(TransactionEntity object) {
     return putByIndex(r'id', object);
   }
 
-  Id putByIdSync(TodoEntity object, {bool saveLinks = true}) {
+  Id putByIdSync(TransactionEntity object, {bool saveLinks = true}) {
     return putByIndexSync(r'id', object, saveLinks: saveLinks);
   }
 
-  Future<List<Id>> putAllById(List<TodoEntity> objects) {
+  Future<List<Id>> putAllById(List<TransactionEntity> objects) {
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<TodoEntity> objects, {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(List<TransactionEntity> objects,
+      {bool saveLinks = true}) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
 
-extension TodoEntityQueryWhereSort
-    on QueryBuilder<TodoEntity, TodoEntity, QWhere> {
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhere> anyIsarId() {
+extension TransactionEntityQueryWhereSort
+    on QueryBuilder<TransactionEntity, TransactionEntity, QWhere> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhere> anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension TodoEntityQueryWhere
-    on QueryBuilder<TodoEntity, TodoEntity, QWhereClause> {
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> isarIdEqualTo(
-      Id isarId) {
+extension TransactionEntityQueryWhere
+    on QueryBuilder<TransactionEntity, TransactionEntity, QWhereClause> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarId,
@@ -212,8 +224,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> isarIdNotEqualTo(
-      Id isarId) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -235,9 +247,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> isarIdGreaterThan(
-      Id isarId,
-      {bool include = false}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -245,9 +256,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> isarIdLessThan(
-      Id isarId,
-      {bool include = false}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -255,7 +265,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> isarIdBetween(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
@@ -271,7 +282,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> idEqualTo(String id) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      idEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'id',
@@ -280,8 +292,8 @@ extension TodoEntityQueryWhere
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterWhereClause> idNotEqualTo(
-      String id) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterWhereClause>
+      idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -316,20 +328,66 @@ extension TodoEntityQueryWhere
   }
 }
 
-extension TodoEntityQueryFilter
-    on QueryBuilder<TodoEntity, TodoEntity, QFilterCondition> {
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> completedEqualTo(
-      bool value) {
+extension TransactionEntityQueryFilter
+    on QueryBuilder<TransactionEntity, TransactionEntity, QFilterCondition> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      amountEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'completed',
+        property: r'amount',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> createdAtEqualTo(
-      DateTime value) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      amountGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'amount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      amountLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'amount',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      amountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'amount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -338,7 +396,7 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition>
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
       createdAtGreaterThan(
     DateTime value, {
     bool include = false,
@@ -352,7 +410,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      createdAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -365,7 +424,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -382,7 +442,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -395,7 +456,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -410,7 +472,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idLessThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -425,7 +488,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idBetween(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -444,7 +508,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idStartsWith(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -457,7 +522,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idEndsWith(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -470,9 +536,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'id',
@@ -482,9 +547,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'id',
@@ -494,7 +558,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -503,7 +568,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'id',
@@ -512,8 +578,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> isarIdEqualTo(
-      Id value) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      isarIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isarId',
@@ -522,7 +588,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> isarIdGreaterThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      isarIdGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -535,7 +602,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> isarIdLessThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      isarIdLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -548,7 +616,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -565,7 +634,64 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleEqualTo(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      lastUpdateEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      lastUpdateGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      lastUpdateLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      lastUpdateBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastUpdate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -578,7 +704,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleGreaterThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -593,7 +720,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleLessThan(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -608,7 +736,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleBetween(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -627,7 +756,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleStartsWith(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -640,7 +770,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleEndsWith(
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -653,9 +784,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'title',
@@ -665,9 +795,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'title',
@@ -677,7 +806,8 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition> titleIsEmpty() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
+      titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -686,7 +816,7 @@ extension TodoEntityQueryFilter
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterFilterCondition>
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterFilterCondition>
       titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -697,148 +827,201 @@ extension TodoEntityQueryFilter
   }
 }
 
-extension TodoEntityQueryObject
-    on QueryBuilder<TodoEntity, TodoEntity, QFilterCondition> {}
+extension TransactionEntityQueryObject
+    on QueryBuilder<TransactionEntity, TransactionEntity, QFilterCondition> {}
 
-extension TodoEntityQueryLinks
-    on QueryBuilder<TodoEntity, TodoEntity, QFilterCondition> {}
+extension TransactionEntityQueryLinks
+    on QueryBuilder<TransactionEntity, TransactionEntity, QFilterCondition> {}
 
-extension TodoEntityQuerySortBy
-    on QueryBuilder<TodoEntity, TodoEntity, QSortBy> {
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByCompleted() {
+extension TransactionEntityQuerySortBy
+    on QueryBuilder<TransactionEntity, TransactionEntity, QSortBy> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByAmount() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completed', Sort.asc);
+      return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByCompletedDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completed', Sort.desc);
+      return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByCreatedAt() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortById() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy> sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByTitle() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByLastUpdateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 }
 
-extension TodoEntityQuerySortThenBy
-    on QueryBuilder<TodoEntity, TodoEntity, QSortThenBy> {
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByCompleted() {
+extension TransactionEntityQuerySortThenBy
+    on QueryBuilder<TransactionEntity, TransactionEntity, QSortThenBy> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByAmount() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completed', Sort.asc);
+      return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByCompletedDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completed', Sort.desc);
+      return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByCreatedAt() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenById() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByIsarId() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByIsarIdDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByTitle() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByLastUpdateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QAfterSortBy>
+      thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 }
 
-extension TodoEntityQueryWhereDistinct
-    on QueryBuilder<TodoEntity, TodoEntity, QDistinct> {
-  QueryBuilder<TodoEntity, TodoEntity, QDistinct> distinctByCompleted() {
+extension TransactionEntityQueryWhereDistinct
+    on QueryBuilder<TransactionEntity, TransactionEntity, QDistinct> {
+  QueryBuilder<TransactionEntity, TransactionEntity, QDistinct>
+      distinctByAmount() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'completed');
+      return query.addDistinctBy(r'amount');
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QDistinct> distinctByCreatedAt() {
+  QueryBuilder<TransactionEntity, TransactionEntity, QDistinct>
+      distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QDistinct> distinctById(
+  QueryBuilder<TransactionEntity, TransactionEntity, QDistinct> distinctById(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TodoEntity, TodoEntity, QDistinct> distinctByTitle(
+  QueryBuilder<TransactionEntity, TransactionEntity, QDistinct>
+      distinctByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastUpdate');
+    });
+  }
+
+  QueryBuilder<TransactionEntity, TransactionEntity, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
@@ -846,33 +1029,41 @@ extension TodoEntityQueryWhereDistinct
   }
 }
 
-extension TodoEntityQueryProperty
-    on QueryBuilder<TodoEntity, TodoEntity, QQueryProperty> {
-  QueryBuilder<TodoEntity, int, QQueryOperations> isarIdProperty() {
+extension TransactionEntityQueryProperty
+    on QueryBuilder<TransactionEntity, TransactionEntity, QQueryProperty> {
+  QueryBuilder<TransactionEntity, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
     });
   }
 
-  QueryBuilder<TodoEntity, bool, QQueryOperations> completedProperty() {
+  QueryBuilder<TransactionEntity, int, QQueryOperations> amountProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'completed');
+      return query.addPropertyName(r'amount');
     });
   }
 
-  QueryBuilder<TodoEntity, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<TransactionEntity, DateTime, QQueryOperations>
+      createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<TodoEntity, String, QQueryOperations> idProperty() {
+  QueryBuilder<TransactionEntity, String, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<TodoEntity, String, QQueryOperations> titleProperty() {
+  QueryBuilder<TransactionEntity, DateTime, QQueryOperations>
+      lastUpdateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastUpdate');
+    });
+  }
+
+  QueryBuilder<TransactionEntity, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });

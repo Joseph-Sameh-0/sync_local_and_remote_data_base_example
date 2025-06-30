@@ -72,12 +72,12 @@ class InvalidEmailOrPasswordException extends MyException {
     : super("Invalid email or password. Please try again.");
 }
 
-class AddTodoException extends MyException {
-  AddTodoException() : super("Failed to add todo. Please try again.");
+class AddTransactionException extends MyException {
+  AddTransactionException() : super("Failed to add transaction. Please try again.");
 }
 
-class LoadTodosException extends MyException {
-  LoadTodosException() : super("Failed to load todos. Please try again.");
+class LoadTransactionsException extends MyException {
+  LoadTransactionsException() : super("Failed to load transactions. Please try again.");
 }
 
 class DocumentNotFoundException extends MyException {
@@ -95,18 +95,18 @@ class FirebaseOperationException extends MyException {
     : super("Firebase operation failed at $path: $message");
 }
 
-class ToggleTodoException extends MyException {
-  ToggleTodoException() : super("Failed to toggle todo completion. Please try again.");
+class ToggleTransactionException extends MyException {
+  ToggleTransactionException() : super("Failed to toggle transaction completion. Please try again.");
 }
 
-class ToDoNotFoundException extends MyException {
-  ToDoNotFoundException() : super("Todo not found.");
+class TransactionNotFoundException extends MyException {
+  TransactionNotFoundException() : super("Transaction not found.");
 }
 
-class TodoDoesNotFoundException extends MyException {
-  TodoDoesNotFoundException() : super("Todo does not exist");
+class TransactionDoesNotFoundException extends MyException {
+  TransactionDoesNotFoundException() : super("Transaction does not exist");
 }
 
-class TodoNotUpdatedException extends MyException {
-  TodoNotUpdatedException() : super("Failed to update todo. Please try again.");
+class TransactionNotUpdatedException extends MyException {
+  TransactionNotUpdatedException() : super("Failed to update transaction. Please try again.");
 }
