@@ -83,7 +83,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final changeData = <String, dynamic>{
         'type': 'transaction',
         'operation': op.operationType.name,
-        // 'changed value': op.columnName,
         'value': op.value,
       };
 
@@ -186,16 +185,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
             transactionIdMap[operation.transactionId] = transactionId;
             break;
 
-          case TransactionOperationType.updateCreatedAt:
-            final remoteTransaction = await remoteDataSource.getTransactionById(operation.transactionId);
-            if (remoteTransaction == null) continue;
-
-            if (remoteTransaction.lastUpdate.isBefore(operation.timestamp)) {
-              await remoteDataSource.updateTransaction(
-                remoteTransaction.copyWith(createdAt: DateTime.parse(operation.value!)),
-              );
-            }
-            break;
 
           case TransactionOperationType.updateTotal:
             final remoteTransaction = await remoteDataSource.getTransactionById(operation.transactionId);
@@ -204,7 +193,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
             final newTotal = double.tryParse(operation.value ?? '0.0') ?? 0.0;
             if (remoteTransaction.lastUpdate.isBefore(operation.timestamp)) {
               await remoteDataSource.updateTransaction(
-                remoteTransaction.copyWith(total: newTotal),
+                remoteTransaction.copyWith(total: newTotal, lastUpdate: DateTime.now()),
               );
             }
             break;

@@ -37,7 +37,7 @@ class POSPage extends StatelessWidget {
       children: [
         Expanded(child: _buildProductsList(context)),
         SizedBox(
-          height: 350, // Fixed height for cart section on mobile
+          height: 300, // Fixed height for cart section on mobile
           child: _buildCartSection(context),
         ),
       ],

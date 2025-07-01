@@ -29,7 +29,6 @@ class TransactionOperationEntity {
 
 enum TransactionOperationType {
   add,
-  updateCreatedAt,
   updateTotal,
   delete,
 }

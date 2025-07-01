@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
-
 import '../../../core/services/network_info_service/network_info_service.dart';
 import '../../../domain/Exception/exception_tree.dart';
 import '../../../domain/entities/pos.dart';
@@ -68,7 +66,6 @@ class ProductRepositoryImpl implements ProductRepository {
       final changeData = <String, dynamic>{
         'type': 'product',
         'operation': op.operationType.name,
-        // 'changed value': op.columnName,
         'value': op.value,
       };
 
@@ -91,14 +88,10 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<void> addProduct({required Product product}) async {
     if (await networkInfoService.isConnected) {
-      await remoteDataSource.addProduct(
-        ProductDto.fromDomain(product),
-      );
+      await remoteDataSource.addProduct(ProductDto.fromDomain(product));
     } else {
       productOperationDataSource.addProduct(product);
-      await localDataSource.addProduct(
-        ProductEntity.fromDomain(product),
-      );
+      await localDataSource.addProduct(ProductEntity.fromDomain(product));
     }
   }
 
@@ -127,9 +120,8 @@ class ProductRepositoryImpl implements ProductRepository {
     }
   }
 
-
   @override
-  Future<void> deleteProduct({required String productId}) async{
+  Future<void> deleteProduct({required String productId}) async {
     if (await networkInfoService.isConnected) {
       return remoteDataSource.deleteProduct(productId);
     } else {
@@ -140,7 +132,8 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<void> sync() async {
-    List<ProductOperationEntity> operations = await productOperationDataSource.getAllOperations();
+    List<ProductOperationEntity> operations = await productOperationDataSource
+        .getAllOperations();
 
     for (var operation in operations) {
       try {
@@ -152,51 +145,58 @@ class ProductRepositoryImpl implements ProductRepository {
             break;
 
           case ProductOperationType.updateName:
-            final remoteProduct = await remoteDataSource.getProductById(operation.productId);
+            final remoteProduct = await remoteDataSource.getProductById(
+              operation.productId,
+            );
             if (remoteProduct == null) continue;
 
             if (remoteProduct.lastUpdate.isBefore(operation.timestamp)) {
               await remoteDataSource.updateProduct(
-                remoteProduct.copyWith(name: operation.value),
+                remoteProduct.copyWith(name: operation.value, lastUpdate: DateTime.now()),
               );
             }
             break;
 
           case ProductOperationType.updateBarcode:
-            final remoteProduct = await remoteDataSource.getProductById(operation.productId);
+            final remoteProduct = await remoteDataSource.getProductById(
+              operation.productId,
+            );
             if (remoteProduct == null) continue;
 
             if (remoteProduct.lastUpdate.isBefore(operation.timestamp)) {
               await remoteDataSource.updateProduct(
-                remoteProduct.copyWith(barcode: operation.value),
+                remoteProduct.copyWith(barcode: operation.value, lastUpdate: DateTime.now()),
               );
             }
             break;
 
           case ProductOperationType.updatePrice:
-            final remoteProduct = await remoteDataSource.getProductById(operation.productId);
+            final remoteProduct = await remoteDataSource.getProductById(
+              operation.productId,
+            );
             if (remoteProduct == null) continue;
 
             final newPrice = double.tryParse(operation.value ?? '0') ?? 0.0;
             if (remoteProduct.lastUpdate.isBefore(operation.timestamp)) {
               await remoteDataSource.updateProduct(
-                remoteProduct.copyWith(price: newPrice),
+                remoteProduct.copyWith(price: newPrice, lastUpdate: DateTime.now()),
               );
             }
             break;
 
           case ProductOperationType.updateStock:
-            final remoteProduct = await remoteDataSource.getProductById(operation.productId);
+            final remoteProduct = await remoteDataSource.getProductById(
+              operation.productId,
+            );
             if (remoteProduct == null) continue;
 
             final deltaStock = int.tryParse(operation.value ?? '0') ?? 0;
             final updatedStock = remoteProduct.stock + deltaStock;
 
-            if (remoteProduct.lastUpdate.isBefore(operation.timestamp)) {
-              await remoteDataSource.updateProduct(
-                remoteProduct.copyWith(stock: updatedStock),
-              );
-            }
+            await remoteDataSource.updateProduct(
+              remoteProduct.copyWith(stock: updatedStock),
+            );
+
             break;
 
           case ProductOperationType.delete:
@@ -205,7 +205,6 @@ class ProductRepositoryImpl implements ProductRepository {
         }
 
         await productOperationDataSource.deleteOperation(operation.id);
-
       } catch (e, s) {
         // Log error and retry
         log("Sync failed for operation ID: ${operation.id}, Error: $e");

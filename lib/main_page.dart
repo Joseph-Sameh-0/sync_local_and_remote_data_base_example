@@ -41,6 +41,26 @@ class MainPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           );
+        } else if (state is ConnectivitySyncError) {
+          widget = Container(
+            width: double.infinity,
+            color: Colors.red,
+            padding: EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Text(
+                  'Error: ${state.message}',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: () => context.read<ConnectivityCubit>().sync(),
+                  child: const Text('Retry Sync'),
+                ),
+              ],
+            ),
+          );
         } else if (state is ConnectivityConnected) {
           widget = const SizedBox.shrink();
         }

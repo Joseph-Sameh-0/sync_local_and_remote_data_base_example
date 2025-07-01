@@ -23,11 +23,19 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
       emit(isConnected ? ConnectivityConnected() : ConnectivityDisconnected());
 
       if (isConnected) {
-        emit(ConnectivitySyncing());
-        await syncUseCase(NoParams());
-        emit(ConnectivityConnected());
+        sync();
       }
     });
+  }
+
+  Future<void> sync() async {
+    emit(ConnectivitySyncing());
+    try {
+      await syncUseCase(NoParams());
+      emit(ConnectivityConnected());
+    } catch (e) {
+      emit(ConnectivitySyncError(e.toString()));
+    }
   }
 
   @override

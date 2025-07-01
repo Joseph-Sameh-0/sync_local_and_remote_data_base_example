@@ -139,15 +139,13 @@ P _transactionOperationEntityDeserializeProp<P>(
 
 const _TransactionOperationEntityoperationTypeEnumValueMap = {
   'add': 0,
-  'updateCreatedAt': 1,
-  'updateTotal': 2,
-  'delete': 3,
+  'updateTotal': 1,
+  'delete': 2,
 };
 const _TransactionOperationEntityoperationTypeValueEnumMap = {
   0: TransactionOperationType.add,
-  1: TransactionOperationType.updateCreatedAt,
-  2: TransactionOperationType.updateTotal,
-  3: TransactionOperationType.delete,
+  1: TransactionOperationType.updateTotal,
+  2: TransactionOperationType.delete,
 };
 
 Id _transactionOperationEntityGetId(TransactionOperationEntity object) {
