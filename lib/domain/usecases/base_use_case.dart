@@ -1,5 +1,5 @@
 abstract class UseCase<Type, Params> {
-  Future<Type> call(Params params);
+  Future<Type> call(Params cartItems);
 }
 
 abstract class StreamUseCase<Type, Params> {

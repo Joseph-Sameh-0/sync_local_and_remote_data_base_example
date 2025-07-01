@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../domain/Exception/exceptions.dart';
-import 'firebase_service.dart';
 import '../../../data/datasources/utils/write_operation.dart';
+import '../../../domain/Exception/exception_tree.dart';
+import 'firebase_service.dart';
 
 class FirebaseServiceImpl implements FirebaseService {
   final FirebaseFirestore firestore;
@@ -17,7 +17,7 @@ class FirebaseServiceImpl implements FirebaseService {
     try {
       final snapshot = await firestore.doc(path).get();
       if (!snapshot.exists) {
-        throw DocumentNotFoundException(path);
+        throw AppExceptions.dataExceptions.documentNotFoundException(path);
       }
       final data = snapshot.data();
       if (data == null) {
@@ -27,7 +27,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, path);
     } catch (e) {
-      throw GetDataException(path);
+      throw AppExceptions.dataExceptions.getDataException(path);
     }
   }
 
@@ -41,7 +41,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, path);
     } catch (e) {
-      throw UpdateDataException(path);
+      throw AppExceptions.dataExceptions.updateDataException(path);
     }
   }
 
@@ -52,7 +52,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, path);
     } catch (e) {
-      throw DeleteDataException(path);
+      throw AppExceptions.dataExceptions.deleteDataException(path);
     }
   }
 
@@ -78,7 +78,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, 'batch_write');
     } catch (e) {
-      throw BatchOperationException();
+      throw AppExceptions.dataExceptions.batchOperationException;
     }
   }
 
@@ -92,7 +92,7 @@ class FirebaseServiceImpl implements FirebaseService {
         .snapshots()
         .map((snapshot) {
           if (!snapshot.exists) {
-            throw DocumentNotFoundException(path);
+            throw AppExceptions.dataExceptions.documentNotFoundException(path);
           }
           final data = snapshot.data();
           if (data == null) {
@@ -104,7 +104,7 @@ class FirebaseServiceImpl implements FirebaseService {
           if (error is FirebaseException) {
             throw _handleFirebaseException(error, path);
           }
-          throw StreamDataException(path);
+          throw AppExceptions.dataExceptions.streamDataException(path);
         });
   }
 
@@ -119,7 +119,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, path);
     } catch (e) {
-      throw SetDataException(path);
+      throw AppExceptions.dataExceptions.setDataException(path);
     }
   }
 
@@ -142,7 +142,7 @@ class FirebaseServiceImpl implements FirebaseService {
     } on FirebaseException catch (e) {
       throw _handleFirebaseException(e, path);
     } catch (e) {
-      throw GetDataException(path);
+      throw AppExceptions.dataExceptions.getDataException(path);
     }
   }
 
@@ -170,20 +170,23 @@ class FirebaseServiceImpl implements FirebaseService {
           if (error is FirebaseException) {
             throw _handleFirebaseException(error, path);
           }
-          throw StreamDataException(path);
+          throw AppExceptions.dataExceptions.streamDataException(path);
         });
   }
 
   Exception _handleFirebaseException(FirebaseException e, String path) {
     switch (e.code) {
       case 'permission-denied':
-        return PermissionDeniedException(path);
+        return AppExceptions.dataExceptions.permissionDeniedException(path);
       case 'not-found':
-        return DocumentNotFoundException(path);
+        return AppExceptions.dataExceptions.documentNotFoundException(path);
       case 'unavailable':
-        return NetworkException(path);
+        return AppExceptions.dataExceptions.networkException(path);
       default:
-        return FirebaseOperationException(path, e.message);
+        return AppExceptions.dataExceptions.firebaseOperationException(
+          path,
+          e.message,
+        );
     }
   }
 }

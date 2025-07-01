@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Transaction {
   final String id;
   final String title;
@@ -12,7 +10,7 @@ class Transaction {
     required this.title,
     required this.amount,
     required this.createdAt,
-    required this.lastUpdate
+    required this.lastUpdate,
   });
 
   Transaction copyWith({

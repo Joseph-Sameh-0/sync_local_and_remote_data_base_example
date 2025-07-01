@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:sync_local_and_remote_data_base_example/main.dart';
 
 void main() {

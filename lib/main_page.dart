@@ -1,11 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'di/injection_container.dart';
 import 'presentation/cubit/connectivity_cubit.dart';
 import 'presentation/cubit/connectivity_state.dart';
-import 'presentation/cubit/transaction_cubit.dart';
-import 'presentation/features/transaction/transaction_page.dart';
+import 'presentation/cubit/pos_cubit.dart';
+import 'presentation/cubit/transactions_cubit.dart';
+import 'presentation/features/pos/pos_page.dart';
+import 'presentation/features/pos/transactions_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -46,9 +49,31 @@ class MainPage extends StatelessWidget {
           children: [
             ?widget,
             Expanded(
-              child: BlocProvider(
-                create: (_) => sl<TransactionCubit>()..loadTransactions(),
-                child: TransactionPage(),
+              child: Navigator(
+                onGenerateRoute: (settings) {
+                  if (settings.name == '/') {
+                    return MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => sl<POSCubit>()..loadProducts(),
+                        child: POSPage(),
+                      ),
+                    );
+                  }
+                  if (settings.name == '/transactions') {
+                    return MaterialPageRoute(
+                      builder: (_) => BlocProvider(
+                        create: (_) => sl<TransactionsCubit>()..loadTransactions(),
+                        child: TransactionsPage(),
+                      ),
+                    );
+                  }
+                  return MaterialPageRoute(
+                    builder: (_) => BlocProvider(
+                      create: (_) => sl<POSCubit>()..loadProducts(),
+                      child: POSPage(),
+                    ),
+                  );
+                },
               ),
             ),
           ],

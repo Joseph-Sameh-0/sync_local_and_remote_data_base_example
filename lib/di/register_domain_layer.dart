@@ -1,12 +1,19 @@
-import '../domain/usecases/add_transaction.dart';
-import '../domain/usecases/get_all_transactions_use_case.dart';
+
+import '../domain/usecases/pos_usecases.dart';
 import '../domain/usecases/sync_use_case.dart';
-import '../domain/usecases/watch_transactions.dart';
 import 'injection_container.dart';
 
 void registerDomainLayer() {
-  sl.registerLazySingleton(() => WatchTransactionsUseCase(repository: sl()));
-  sl.registerLazySingleton(() => AddTransactionUseCase(repository: sl()));
-  sl.registerLazySingleton(() => GetAllTransactionsUseCase(repository: sl()));
-  sl.registerLazySingleton(() => SyncUseCase(transactionRepository: sl()));
+  sl.registerLazySingleton(
+    () => SyncUseCase(transactionRepository: sl(), productRepository: sl()),
+  );
+  sl.registerLazySingleton(() => GetProductsUseCase(productRepository: sl()));
+  sl.registerLazySingleton(() => SearchProductsUseCase());
+  sl.registerLazySingleton(
+    () => ProcessSaleUseCase(
+      productRepository: sl(),
+      transactionRepository: sl(),
+    ),
+  );
+  sl.registerLazySingleton(() => AddProductUseCase(productRepository: sl()));
 }

@@ -1,13 +1,20 @@
-import '../repositories/transaction_repository.dart';
+
+import '../repositories/pos/product_repository.dart';
+import '../repositories/pos/transaction_repository.dart';
 import 'base_use_case.dart';
 
 class SyncUseCase extends UseCase<void, NoParams> {
   final TransactionRepository transactionRepository;
+  final ProductRepository productRepository;
 
-  SyncUseCase({required this.transactionRepository});
+  SyncUseCase({
+    required this.productRepository,
+    required this.transactionRepository,
+  });
 
   @override
-  Future<void> call(NoParams params) async {
-    await transactionRepository.syncTransactions();
+  Future<void> call(NoParams cartItems) async {
+    await transactionRepository.sync();
+    await productRepository.sync();
   }
 }

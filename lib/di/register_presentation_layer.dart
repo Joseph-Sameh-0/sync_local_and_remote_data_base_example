@@ -1,16 +1,18 @@
+import '../presentation/cubit/pos_cubit.dart';
+
 import '../presentation/cubit/connectivity_cubit.dart';
-import '../presentation/cubit/transaction_cubit.dart';
 import 'injection_container.dart';
 
 void registerPresentationLayer() {
   sl.registerFactory(
-        () => TransactionCubit(
-      watchTransactionsUseCase: sl(),
-      addTransactionUseCase: sl(),
-      getAllTransactionsUseCase: sl(),
-    ),
+    () => ConnectivityCubit(networkInfoService: sl(), syncUseCase: sl()),
   );
   sl.registerFactory(
-        () => ConnectivityCubit(networkInfoService: sl(), syncUseCase: sl()),
+    () => POSCubit(
+      getProducts: sl(),
+      processSale: sl(),
+      searchProductsUseCase: sl(),
+      addProductUseCase: sl(),
+    ),
   );
 }
