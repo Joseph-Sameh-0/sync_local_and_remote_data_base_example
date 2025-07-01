@@ -61,13 +61,13 @@ class ProcessSaleUseCase extends UseCase<void, List<CartItem>> {
       ),
       lastUpdate: DateTime.now(),
     );
-    await transactionRepository.addTransaction(transaction);
+    String transactionId = await transactionRepository.addTransaction(transaction);
 
     for (final item in cartItems) {
       await transactionRepository.addTransactionItem(
         transactionItem: TransactionItem(
           itemId: Uuid().v4(),
-          transactionId: transaction.id,
+          transactionId: transactionId,
           productId: item.product.productId,
           quantity: item.quantity,
           productPrice: item.product.price,

@@ -58,6 +58,37 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
+  Future<List<PendingUpdates>> getPendingProductsUpdates() async {
+    List<ProductOperationEntity> productOperations =
+        await productOperationDataSource.getAllOperations();
+
+    List<PendingUpdates> pendingUpdates = [];
+
+    for (var op in productOperations) {
+      final changeData = <String, dynamic>{
+        'type': 'product',
+        'operation': op.operationType.name,
+        // 'changed value': op.columnName,
+        'value': op.value,
+      };
+
+      pendingUpdates.add(
+        PendingUpdates(
+          id: op.productId,
+          action: op.operationType.name,
+          changes: changeData,
+          timestamp: op.timestamp,
+        ),
+      );
+    }
+
+    // Sort by timestamp (most recent first)
+    pendingUpdates.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+    return pendingUpdates;
+  }
+
+  @override
   Future<void> addProduct({required Product product}) async {
     if (await networkInfoService.isConnected) {
       await remoteDataSource.addProduct(

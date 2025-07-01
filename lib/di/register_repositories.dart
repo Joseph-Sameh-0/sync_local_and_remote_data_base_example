@@ -6,7 +6,7 @@ import '../domain/repositories/pos/transaction_repository.dart';
 import 'injection_container.dart';
 
 void registerRepositories() {
-  sl.registerLazySingleton<TransactionRepository>(
+  sl.registerFactory<TransactionRepository>(
     () => TransactionRepositoryImpl(
       remoteDataSource: sl(),
       localDataSource: sl(),
@@ -15,7 +15,7 @@ void registerRepositories() {
       transactionItemOperationDataSource: sl(),
     ),
   );
-  sl.registerLazySingleton<ProductRepository>(
+  sl.registerFactory<ProductRepository>(
     () => ProductRepositoryImpl(
       localDataSource: sl(),
       remoteDataSource: sl(),

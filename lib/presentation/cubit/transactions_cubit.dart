@@ -9,7 +9,7 @@ import 'transactions_state.dart';
 
 class TransactionsCubit extends Cubit<TransactionsState> {
   final GetTransactionsUseCase getTransactionsUseCase;
-  final GetPendingTransactionsUseCase getPendingTransactionsUseCase;
+  final GetPendingUpdatesUseCase getPendingTransactionsUseCase;
 
   StreamSubscription<List<Transaction>>? _transactionsSub;
 

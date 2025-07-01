@@ -15,7 +15,7 @@ class TransactionsLoading extends TransactionsState {}
 
 class TransactionsLoaded extends TransactionsState {
   final List<Transaction> transactions;
-  final List<PendingTransaction> pendingTransactions;
+  final List<PendingUpdates> pendingTransactions;
 
   const TransactionsLoaded({required this.transactions, required this.pendingTransactions});
 

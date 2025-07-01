@@ -3,7 +3,7 @@ import '../../entities/pos.dart';
 abstract class TransactionRepository {
   Stream<List<Transaction>> getTransactions();
 
-  Future<void> addTransaction(Transaction transaction);
+  Future<String> addTransaction(Transaction transaction);
 
   Future<void> deleteTransaction(String transactionId);
 
@@ -14,6 +14,6 @@ abstract class TransactionRepository {
   Future<void> sync();
   void dispose();
 
-  Future<List<PendingTransaction>> getPendingTransactions();
+  Future<List<PendingUpdates>> getPendingTransactions();
 }
 

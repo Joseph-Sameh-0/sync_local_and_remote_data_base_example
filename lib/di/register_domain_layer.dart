@@ -1,4 +1,3 @@
-
 import '../domain/usecases/pos_usecases.dart';
 import '../domain/usecases/sync_use_case.dart';
 import '../domain/usecases/transactions_use_cases.dart';
@@ -18,11 +17,12 @@ void registerDomainLayer() {
   );
   sl.registerLazySingleton(() => AddProductUseCase(productRepository: sl()));
   sl.registerLazySingleton(
-    () => GetTransactionsUseCase(
-      transactionRepository: sl(),
-    ),
+    () => GetTransactionsUseCase(transactionRepository: sl()),
   );
   sl.registerLazySingleton(
-    () => GetPendingTransactionsUseCase(transactionRepository: sl()),
+    () => GetPendingUpdatesUseCase(
+      transactionRepository: sl(),
+      productRepository: sl(),
+    ),
   );
 }

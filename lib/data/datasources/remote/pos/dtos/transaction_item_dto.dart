@@ -59,4 +59,26 @@ class TransactionItemDto {
       lastUpdate: transaction.lastUpdate,
     );
   }
+
+  TransactionItemDto copyWith ({
+    String? itemId,
+    String? transactionId,
+    String? productId,
+    String? productName,
+    double? productPrice,
+    int? quantity,
+    double? subtotal,
+    DateTime? lastUpdate,
+  }) {
+    return TransactionItemDto(
+      itemId: itemId ?? this.itemId,
+      transactionId: transactionId ?? this.transactionId,
+      productId: productId ?? this.productId,
+      quantity: quantity ?? this.quantity,
+      productName: productName ?? this.productName,
+      productPrice: productPrice ?? this.productPrice,
+      subtotal: subtotal ?? this.subtotal,
+      lastUpdate: lastUpdate ?? this.lastUpdate,
+    );
+  }
 }

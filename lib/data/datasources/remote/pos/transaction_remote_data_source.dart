@@ -7,7 +7,7 @@ abstract class TransactionRemoteDataSource {
 
   Future<TransactionDto?> getTransactionById(String transactionId);
 
-  Future<void> addTransaction(TransactionDto transaction);
+  Future<String> addTransaction(TransactionDto transaction);
 
   Future<void> updateTransaction(TransactionDto transaction);
 
@@ -41,8 +41,8 @@ class TransactionFireStoreDataSource implements TransactionRemoteDataSource {
   }
 
   @override
-  Future<void> addTransaction(TransactionDto transaction) async {
-    await firebaseService.addToCollection(
+  Future<String> addTransaction(TransactionDto transaction) async {
+    return await firebaseService.addToCollection(
       path: transactionsPath,
       data: transaction.toJson(),
     );

@@ -16,4 +16,6 @@ abstract class ProductRepository {
 
   Future<void> sync();
   void dispose();
+
+  Future<List<PendingUpdates>> getPendingProductsUpdates();
 }

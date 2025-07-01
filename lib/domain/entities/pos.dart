@@ -176,13 +176,13 @@ class TransactionItem {
   }
 }
 
-class PendingTransaction {
+class PendingUpdates {
   final String id;
   final String action;
   final Map<String, dynamic> changes;
   final DateTime timestamp;
 
-  PendingTransaction({
+  PendingUpdates({
     required this.id,
     required this.action,
     required this.changes,

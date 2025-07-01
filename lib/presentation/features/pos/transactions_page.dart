@@ -117,18 +117,18 @@ class TransactionsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Pending Transactions (${pendingTransactions.length})',
+              'Pending updates (${pendingTransactions.length})',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             if (pendingTransactions.isEmpty)
-              const Center(child: Text('No pending transactions.'))
+              const Center(child: Text('No pending updates.'))
             else
               Expanded(
                 child: ListView.builder(
                   itemCount: pendingTransactions.length,
                   itemBuilder: (context, index) {
-                    final PendingTransaction item = pendingTransactions[index];
+                    final PendingUpdates item = pendingTransactions[index];
                     return ListTile(
                       title: Text('Action: ${item.action}'),
                       subtitle: Column(

@@ -36,6 +36,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Stream<List<Transaction>> getTransactions() {
+
     _networkSub ??= networkInfoService.onStatusChange.listen((isConnected) {
       if (isConnected) {
         remoteDataSource.getTransactions().listen((remoteTransactions) async {
@@ -47,6 +48,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
         });
       }
     });
+
+
 
     // Always return local data stream for UI
     return localDataSource.getTransactions().map(
@@ -66,26 +69,26 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<List<PendingTransaction>> getPendingTransactions() async {
+  Future<List<PendingUpdates>> getPendingTransactions() async {
     List<TransactionOperationEntity> transactionOperations =
     await transactionOperationDataSource.getAllOperations();
 
     List<TransactionItemOperationEntity> transactionItemOperations =
     await transactionItemOperationDataSource.getAllOperations();
 
-    List<PendingTransaction> pendingTransactions = [];
+    List<PendingUpdates> pendingTransactions = [];
 
     // Add Transaction-level operations
     for (var op in transactionOperations) {
       final changeData = <String, dynamic>{
         'type': 'transaction',
         'operation': op.operationType.name,
-        'changed value': op.columnName,
+        // 'changed value': op.columnName,
         'value': op.value,
       };
 
       pendingTransactions.add(
-        PendingTransaction(
+        PendingUpdates(
           id: op.transactionId,
           action: op.operationType.name,
           changes: changeData,
@@ -99,12 +102,12 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final changeData = <String, dynamic>{
         'type': 'transaction_item',
         'operation': op.operationType.name,
-        'changed value': op.columnName,
+        // 'changed value': op.columnName,
         'value': op.value,
       };
 
       pendingTransactions.add(
-        PendingTransaction(
+        PendingUpdates(
           id: op.itemId, // or link to parent transactionId if available
           action: op.operationType.name,
           changes: changeData,
@@ -120,9 +123,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<void> addTransaction(Transaction transaction) async {
+  Future<String> addTransaction(Transaction transaction) async {
     if (await networkInfoService.isConnected) {
-      await remoteDataSource.addTransaction(
+      return await remoteDataSource.addTransaction(
         TransactionDto.fromDomain(transaction),
       );
     } else {
@@ -130,6 +133,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       await localDataSource.addTransaction(
         TransactionEntity.fromDomain(transaction),
       );
+      return transaction.id;
     }
   }
 
@@ -166,6 +170,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
     List<TransactionOperationEntity> transactionOperations =
     await transactionOperationDataSource.getAllOperations();
 
+    Map<String, String> transactionIdMap = {};
+
     for (var operation in transactionOperations) {
 
       try {
@@ -174,9 +180,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
             final transaction = Transaction.fromJson(
               jsonDecode(operation.value!),
             );
-            await remoteDataSource.addTransaction(
+            String transactionId = await remoteDataSource.addTransaction(
               TransactionDto.fromDomain(transaction),
             );
+            transactionIdMap[operation.transactionId] = transactionId;
             break;
 
           case TransactionOperationType.updateCreatedAt:
@@ -227,7 +234,9 @@ class TransactionRepositoryImpl implements TransactionRepository {
           case TransactionItemOperationType.add:
             final item = TransactionItem.fromJson(jsonDecode(operation.value!));
             await remoteDataSource.addTransactionItem(
-              TransactionItemDto.fromDomain(item),
+              TransactionItemDto.fromDomain(item).copyWith(
+                transactionId: transactionIdMap[item.transactionId] ?? item.transactionId,
+              ),
             );
             break;
 

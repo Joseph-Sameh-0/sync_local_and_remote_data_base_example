@@ -14,7 +14,11 @@ class NetworkInfoServiceConnectivityPlus implements NetworkInfoService {
   }
 
   @override
-  Stream<bool> get onStatusChange => connectivity.onConnectivityChanged.map(
-    (result) => !(result.contains(ConnectivityResult.none)),
-  );
+  Stream<bool> get onStatusChange async* {
+    final initial = await connectivity.checkConnectivity();
+    yield !(initial.contains(ConnectivityResult.none));
+    yield* connectivity.onConnectivityChanged.map(
+          (result) => !(result.contains(ConnectivityResult.none)),
+    );
+  }
 }
