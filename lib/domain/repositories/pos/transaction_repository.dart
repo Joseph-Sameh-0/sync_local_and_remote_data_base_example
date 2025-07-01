@@ -13,5 +13,7 @@ abstract class TransactionRepository {
 
   Future<void> sync();
   void dispose();
+
+  Future<List<PendingTransaction>> getPendingTransactions();
 }
 

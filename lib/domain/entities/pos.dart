@@ -175,3 +175,17 @@ class TransactionItem {
     );
   }
 }
+
+class PendingTransaction {
+  final String id;
+  final String action;
+  final Map<String, dynamic> changes;
+  final DateTime timestamp;
+
+  PendingTransaction({
+    required this.id,
+    required this.action,
+    required this.changes,
+    required this.timestamp,
+  });
+}

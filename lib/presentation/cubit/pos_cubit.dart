@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sync_local_and_remote_data_base_example/domain/repositories/pos/product_repository.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../di/injection_container.dart';
 import '../../domain/entities/pos.dart';
 import '../../domain/usecases/base_use_case.dart';
 import '../../domain/usecases/pos_usecases.dart';
@@ -102,7 +100,7 @@ class POSCubit extends Cubit<POSState> {
         if (index != -1) {
           final item = cart[index];
           // if (item.quantity > 1) {
-            cart[index] = item.copyWith(quantity: item.quantity - 1);
+          cart[index] = item.copyWith(quantity: item.quantity - 1);
           // } else {
           //   cart.removeAt(index);
           // }
@@ -132,7 +130,12 @@ class POSCubit extends Cubit<POSState> {
     }
   }
 
-  void addNewProduct({required String name, required String barcode, required double price, required int stock}) {
+  void addNewProduct({
+    required String name,
+    required String barcode,
+    required double price,
+    required int stock,
+  }) {
     final newProduct = Product(
       productId: Uuid().v4(),
       name: name,
@@ -148,9 +151,4 @@ class POSCubit extends Cubit<POSState> {
     });
   }
 
-  @override
-  Future<void> close() {
-    _productsSubscription?.cancel();
-    return super.close();
-  }
 }

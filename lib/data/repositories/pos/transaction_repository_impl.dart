@@ -66,6 +66,60 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Future<List<PendingTransaction>> getPendingTransactions() async {
+    List<TransactionOperationEntity> transactionOperations =
+    await transactionOperationDataSource.getAllOperations();
+
+    List<TransactionItemOperationEntity> transactionItemOperations =
+    await transactionItemOperationDataSource.getAllOperations();
+
+    List<PendingTransaction> pendingTransactions = [];
+
+    // Add Transaction-level operations
+    for (var op in transactionOperations) {
+      final changeData = <String, dynamic>{
+        'type': 'transaction',
+        'operation': op.operationType.name,
+        'changed value': op.columnName,
+        'value': op.value,
+      };
+
+      pendingTransactions.add(
+        PendingTransaction(
+          id: op.transactionId,
+          action: op.operationType.name,
+          changes: changeData,
+          timestamp: op.timestamp,
+        ),
+      );
+    }
+
+    // Add TransactionItem-level operations
+    for (var op in transactionItemOperations) {
+      final changeData = <String, dynamic>{
+        'type': 'transaction_item',
+        'operation': op.operationType.name,
+        'changed value': op.columnName,
+        'value': op.value,
+      };
+
+      pendingTransactions.add(
+        PendingTransaction(
+          id: op.itemId, // or link to parent transactionId if available
+          action: op.operationType.name,
+          changes: changeData,
+          timestamp: op.timestamp,
+        ),
+      );
+    }
+
+    // Sort by timestamp (most recent first)
+    pendingTransactions.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+
+    return pendingTransactions;
+  }
+
+  @override
   Future<void> addTransaction(Transaction transaction) async {
     if (await networkInfoService.isConnected) {
       await remoteDataSource.addTransaction(
