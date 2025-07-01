@@ -26,7 +26,7 @@ class MainPage extends StatelessWidget {
             padding: EdgeInsets.all(8),
             child: Text(
               'Syncing...',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           );
@@ -37,7 +37,7 @@ class MainPage extends StatelessWidget {
             padding: EdgeInsets.all(8),
             child: Text(
               'No Internet Connection',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: 16),
               textAlign: TextAlign.center,
             ),
           );

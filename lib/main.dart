@@ -17,11 +17,14 @@ class SyncApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Firebase Transaction',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: BlocProvider(
         create: (_) => sl<ConnectivityCubit>(),
-        child: MainPage(),
+        child: Container(
+          color: Colors.white,
+            child: SafeArea(child: MainPage())),
       ),
     );
   }
