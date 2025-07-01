@@ -200,11 +200,14 @@ class POSPage extends StatelessWidget {
 
   int _getCrossAxisCount(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    if (width < 300) return 1; // Extra small phones
     if (width < 400) return 2; // Small phones
-    if (width < 700) return 3; // Phones
-    if (width < 900) return 4;
+    if (width < 800) return 3; // Phones
+    if (width < 1000) return 4;
     if (width < 1200) return 5;
-    return 6; // Tablets/Desktops
+    if (width < 1400) return 6;
+    if (width < 1600) return 7; // Large Tablets
+    return 8; // Tablets/Desktops
   }
 
   Widget _buildCartSection(BuildContext context) {
