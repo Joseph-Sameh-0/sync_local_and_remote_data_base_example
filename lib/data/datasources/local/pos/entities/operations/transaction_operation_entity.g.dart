@@ -18,29 +18,24 @@ const TransactionOperationEntitySchema = CollectionSchema(
   name: r'TransactionOperationEntity',
   id: 4874869294996962797,
   properties: {
-    r'columnName': PropertySchema(
-      id: 0,
-      name: r'columnName',
-      type: IsarType.string,
-    ),
     r'operationType': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'operationType',
       type: IsarType.byte,
       enumMap: _TransactionOperationEntityoperationTypeEnumValueMap,
     ),
     r'timestamp': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'timestamp',
       type: IsarType.dateTime,
     ),
     r'transactionId': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'transactionId',
       type: IsarType.string,
     ),
     r'value': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'value',
       type: IsarType.string,
     )
@@ -65,12 +60,6 @@ int _transactionOperationEntityEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.columnName;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
   bytesCount += 3 + object.transactionId.length * 3;
   {
     final value = object.value;
@@ -87,11 +76,10 @@ void _transactionOperationEntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.columnName);
-  writer.writeByte(offsets[1], object.operationType.index);
-  writer.writeDateTime(offsets[2], object.timestamp);
-  writer.writeString(offsets[3], object.transactionId);
-  writer.writeString(offsets[4], object.value);
+  writer.writeByte(offsets[0], object.operationType.index);
+  writer.writeDateTime(offsets[1], object.timestamp);
+  writer.writeString(offsets[2], object.transactionId);
+  writer.writeString(offsets[3], object.value);
 }
 
 TransactionOperationEntity _transactionOperationEntityDeserialize(
@@ -101,13 +89,12 @@ TransactionOperationEntity _transactionOperationEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TransactionOperationEntity(
-    columnName: reader.readStringOrNull(offsets[0]),
     operationType: _TransactionOperationEntityoperationTypeValueEnumMap[
-            reader.readByteOrNull(offsets[1])] ??
+            reader.readByteOrNull(offsets[0])] ??
         TransactionOperationType.add,
-    timestamp: reader.readDateTime(offsets[2]),
-    transactionId: reader.readString(offsets[3]),
-    value: reader.readStringOrNull(offsets[4]),
+    timestamp: reader.readDateTime(offsets[1]),
+    transactionId: reader.readString(offsets[2]),
+    value: reader.readStringOrNull(offsets[3]),
   );
   object.id = id;
   return object;
@@ -121,16 +108,14 @@ P _transactionOperationEntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readStringOrNull(offset)) as P;
-    case 1:
       return (_TransactionOperationEntityoperationTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           TransactionOperationType.add) as P;
-    case 2:
+    case 1:
       return (reader.readDateTime(offset)) as P;
-    case 3:
+    case 2:
       return (reader.readString(offset)) as P;
-    case 4:
+    case 3:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -245,162 +230,6 @@ extension TransactionOperationEntityQueryWhere on QueryBuilder<
 
 extension TransactionOperationEntityQueryFilter on QueryBuilder<
     TransactionOperationEntity, TransactionOperationEntity, QFilterCondition> {
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'columnName',
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'columnName',
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'columnName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-          QAfterFilterCondition>
-      columnNameContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'columnName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-          QAfterFilterCondition>
-      columnNameMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'columnName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'columnName',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterFilterCondition> columnNameIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'columnName',
-        value: '',
-      ));
-    });
-  }
-
   QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
       QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -874,20 +703,6 @@ extension TransactionOperationEntityQueryLinks on QueryBuilder<
 extension TransactionOperationEntityQuerySortBy on QueryBuilder<
     TransactionOperationEntity, TransactionOperationEntity, QSortBy> {
   QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterSortBy> sortByColumnName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'columnName', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterSortBy> sortByColumnNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'columnName', Sort.desc);
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
       QAfterSortBy> sortByOperationType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'operationType', Sort.asc);
@@ -946,20 +761,6 @@ extension TransactionOperationEntityQuerySortBy on QueryBuilder<
 
 extension TransactionOperationEntityQuerySortThenBy on QueryBuilder<
     TransactionOperationEntity, TransactionOperationEntity, QSortThenBy> {
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterSortBy> thenByColumnName() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'columnName', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QAfterSortBy> thenByColumnNameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'columnName', Sort.desc);
-    });
-  }
-
   QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
       QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
@@ -1034,13 +835,6 @@ extension TransactionOperationEntityQuerySortThenBy on QueryBuilder<
 extension TransactionOperationEntityQueryWhereDistinct on QueryBuilder<
     TransactionOperationEntity, TransactionOperationEntity, QDistinct> {
   QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
-      QDistinct> distinctByColumnName({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'columnName', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, TransactionOperationEntity,
       QDistinct> distinctByOperationType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'operationType');
@@ -1075,13 +869,6 @@ extension TransactionOperationEntityQueryProperty on QueryBuilder<
   QueryBuilder<TransactionOperationEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<TransactionOperationEntity, String?, QQueryOperations>
-      columnNameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'columnName');
     });
   }
 

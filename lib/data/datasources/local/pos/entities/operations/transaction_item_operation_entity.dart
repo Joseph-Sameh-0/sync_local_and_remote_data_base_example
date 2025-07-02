@@ -9,21 +9,19 @@ class TransactionItemOperationEntity {
   late String itemId;
   @enumerated
   late TransactionItemOperationType operationType;
-  String? columnName;
   String? value;
   late DateTime timestamp;
 
   TransactionItemOperationEntity({
     required this.itemId,
     required this.operationType,
-    this.columnName,
     this.value,
     required this.timestamp,
   });
 
   @override
   String toString() {
-    return 'TransactionItemOperationEntity(id: $id, itemId: $itemId, operationType: $operationType, columnName: $columnName, value: $value, timestamp: $timestamp)';
+    return 'TransactionItemOperationEntity(id: $id, itemId: $itemId, operationType: $operationType, value: $value, timestamp: $timestamp)';
   }
 }
 

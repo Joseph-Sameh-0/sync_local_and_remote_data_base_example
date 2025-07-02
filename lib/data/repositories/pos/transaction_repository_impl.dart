@@ -101,7 +101,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final changeData = <String, dynamic>{
         'type': 'transaction_item',
         'operation': op.operationType.name,
-        // 'changed value': op.columnName,
         'value': op.value,
       };
 

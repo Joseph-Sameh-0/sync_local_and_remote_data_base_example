@@ -9,21 +9,19 @@ class ProductOperationEntity {
   late String productId;
   @enumerated
   late ProductOperationType operationType;
-  String? columnName;
   String? value;
   late DateTime timestamp;
 
   ProductOperationEntity({
     required this.productId,
     required this.operationType,
-    this.columnName,
     this.value,
     required this.timestamp,
   });
 
   @override
   String toString() {
-    return 'ProductOperationEntity(id: $id, productId: $productId, operationType: $operationType, columnName: $columnName, value: $value, timestamp: $timestamp)';
+    return 'ProductOperationEntity(id: $id, productId: $productId, operationType: $operationType, value: $value, timestamp: $timestamp)';
   }
 }
 
